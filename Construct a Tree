@@ -1,0 +1,28 @@
+
+/*Complete the code here.
+Node is as follows:
+struct Node
+{
+  int data;
+  Node* left;
+  Node* right;
+};
+*/
+class Solution{
+    public:
+    Node* solve(int in[], int is, int ie, int pre[], int ps, int pe){
+        if(is > ie || ps > pe)  return nullptr ;
+        Node* root = new Node(pre[ps]) ;
+        int idx = is ;
+        while(in[idx] != pre[ps])   idx++ ;
+        int numsOnLeft = idx - is ;
+        root -> left = solve(in, is, idx - 1, pre, ps + 1, ps + numsOnLeft) ;
+        root -> right = solve(in, idx + 1, ie, pre, ps + numsOnLeft + 1, pe) ;
+        return root ;
+    }
+    
+    Node* buildTree(int in[],int pre[], int n){
+        Node* root = solve(in, 0, n - 1, pre, 0, n - 1) ;
+        return root ;
+    }
+};
